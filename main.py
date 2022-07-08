@@ -6,13 +6,14 @@ import json
 import datetime
 from keep_alive import keep_alive
 from extract import json_extract
-#CREDENTIALS & VARIABLES
 
+#CREDENTIALS & VARIABLES
 APIKEY = "x-tZ3HcHUpy5e8UZWqjdCsDi_LFk5uJHGGjG"
 TOKEN = os.environ['TOKEN']
 client = discord.Client()
 date = "21-08-2021"
 client = commands.Bot(command_prefix="!")
+
 
 #FINDS AND GRABS JSON DATA AND LOADS INTO PY DICTIONARY
 def get_setlist(date):
@@ -23,6 +24,7 @@ def get_setlist(date):
   }
   response = requests.get(url, headers=headers)
   print(response.text)
+
 #JSON INTO PY DICTIONARY
   json_data = json_extract(json.loads(response.text),"name") 
   #setlist = json.loads(response.text)   
@@ -40,7 +42,6 @@ async def on_message(message):
     msg = message.content
     if message.author == client.user:
         return
-
     if msg.startswith("$sl"):
 #DATE VALIDATOR
       date = msg.split("$sl ",1)[1]  
@@ -54,6 +55,7 @@ async def on_message(message):
         except ValueError:
           isValidDate = False
         if(isValidDate):
+
 #GET SETLIST
           setlist = get_setlist(date)
 
@@ -73,13 +75,14 @@ async def on_message(message):
       wook = "kingCust.jpg"  
       await message.channel.send(file=discord.File(wook))
       await message.channel.send("King Custy")
+
 #HELP
     if msg.startswith("$help"):
       await message.channel.send("Type the command followed by the date in this format '$sl DD-MM-YYYY' to get info")
 
 
-#ALTERNATE
-@client.command()
+#ALTERNATE METHOD
+"""@client.command()
 async def sl(ctx, *args):
   args = list(args)
   artist=" ".join(args[:-1])
@@ -120,7 +123,7 @@ async def sl(ctx, *args):
     embed.add_field(name='Location', value=location, inline=False)
     embed.set_footer(text="Boy, Man, God, Shit")
     await ctx.send(embed=embed)
-
+"""
 #SERVER
 keep_alive()
 client.run(TOKEN)
