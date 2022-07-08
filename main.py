@@ -8,7 +8,7 @@ from keep_alive import keep_alive
 from extract import json_extract
 
 #CREDENTIALS & VARIABLES
-APIKEY = "x-tZ3HcHUpy5e8UZWqjdCsDi_LFk5uJHGGjG"
+APIKEY = os.environ['apikey']
 TOKEN = os.environ['TOKEN']
 client = discord.Client()
 date = "21-08-2021"
