@@ -10,6 +10,7 @@ APIKEY = os.environ['apikey']
 TOKEN = os.environ['TOKEN']
 client = discord.Client()
 client = commands.Bot(command_prefix='$')
+client.remove_command('help')
 
 #Lets me know when logged in
 @client.event
@@ -17,9 +18,9 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
 #NOT WORKING help section. discord commands has a prebuilt help i need to override
-@client.event
+@client.command()
 async def help(ctx):
-  embed = discord.Embed(title="Help", color=discord.Color.gold())
+  embed = discord.Embed(title="Help", color=discord.Color.blue())
   embed.add_field(name="$bmfs", value="Follow command with date [MM-DD-YYYY] to see the setlist from that date. i.e. $billy 29-06-2022", inline=False)
   embed.add_field(name="$custy", value="All hail King Custy", inline=False)
   embed.add_field(name="$set", value="Follow command with artist and date [MM-DD-YYYY] to see that artsits setlist from that day. i.e. $set widespread panic 25-07-2022", inline=False)
@@ -42,7 +43,7 @@ async def set(ctx, *args):
   else:
     date = args[-1]
   if not (artist and date):
-    embed = discord.Embed(title=":warning: Please provide provide both a name and a date [MM-DD-YYYY]!", color=discord.Color.gold())
+    embed = discord.Embed(title=":warning: Please provide provide both a name and a date [MM-DD-YYYY]!", color=discord.Color.red())
     embed.set_footer(text="Next Time Will Be Different, Until You Do It Again")
     await ctx.send(embed=embed)
     return
@@ -50,7 +51,7 @@ async def set(ctx, *args):
   headers = {'x-api-key': APIKEY, 'Accept': 'application/json'}
   r = requests.get(url, headers=headers)
   print(r.text)
-  songs =""
+  songs = "none"
   for setlist in json.loads(r.text)["setlist"]:
     if artist in setlist["artist"]["name"]:
       for set in setlist["sets"]["set"]:
