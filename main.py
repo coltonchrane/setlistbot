@@ -3,9 +3,7 @@ from discord.ext import commands
 import os
 import requests
 import json
-import datetime
 from keep_alive import keep_alive
-from extract import json_extract
 
 #CREDENTIALS & VARIABLES
 APIKEY = os.environ['apikey']
@@ -40,7 +38,7 @@ async def sl(ctx, *args):
     embed.set_footer(text="Next Time Will Be Different, Until You Do It Again")
     await ctx.send(embed=embed)
     return
-
+    
   headers = {'x-api-key': APIKEY, 'Accept': 'application/json'}
   r = requests.get(f"https://api.setlist.fm/rest/1.0/search/setlists?artistName=%7Bartist%7D&p=1&date=%7Bdate%7D", headers=headers)
   print(r.text)
@@ -79,3 +77,4 @@ client.run(TOKEN)
 
 
 
+#f"https://api.setlist.fm/rest/1.0/search/setlists?artistName=%7Bartist%7D&p=1&date=%7Bdate%7D"
