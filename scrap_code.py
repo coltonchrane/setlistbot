@@ -49,17 +49,6 @@ async def on_message(message):
             else:
                 await message.channel.send("Date must be in DD-MM-YYYY format.")
 
-#EPIC TROLL
-    if msg.startswith("$Billycord"):
-        wook = "kingCust.jpg"
-        await message.channel.send(file=discord.File(wook))
-        await message.channel.send("King Custy")
-
-#HELP
-    if msg.startswith("$help"):
-        await message.channel.send(
-            "Type the command followed by the date in this format '$sl DD-MM-YYYY' to get info"
-        )
 '''
 
 
