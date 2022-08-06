@@ -4,10 +4,10 @@
 
 Having trouble adding functionality to retrieve setlists for any artist typed in. 
 Program won't pull songs from JSON despite getting data returned to the console, and 
-having the same exact code as the other methods. I'm guessing I am requesting to 
+using the same maethod to format and send the data. I'm guessing I am requesting to 
 much from the setlist API? I am waiting on
 setlist.fm to upgrade my API and I am hoping it resolves my issue. Next step is to 
-handle errors appropriately. Would love to hear any feedback or interest in this.
+handle errors in more detail. Would love to hear any feedback or interest in this.
 
 <h3 align= "center">
 <a href="https://discord.gg/PSKHmVgu"> 
