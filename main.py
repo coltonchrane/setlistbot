@@ -28,7 +28,7 @@ async def set(ctx, *args):
   else:
     date = args[-1]
   if not (artist and date):
-    embed = discord.Embed(title=":warning: Please provide provide both a name and a date [MM-DD-YYYY]!", color=discord.Color.red())
+    embed = discord.Embed(title=":warning: Please provide provide both a name and a date [DD-MM-YYYY]!", color=discord.Color.red())
     embed.set_footer(text="Next Time Will Be Different, Until You Do It Again")
     await ctx.send(embed=embed)
     return
@@ -64,16 +64,15 @@ async def set(ctx, *args):
     embed.add_field(name='Location', value=location, inline=False)
     await ctx.send(embed=embed)
 
-#f'https://api.setlist.fm/rest/1.0/search/setlists?artistName={artist}&p=1&date={date}'
 
 #HELP
 @client.command()
 async def help(ctx):
   embed = discord.Embed(title="Help", color=discord.Color.blue())
-  embed.add_field(name="$bmfs", value="Follow command with date [MM-DD-YYYY] to see the setlist from that date. i.e. $billy 29-06-2022", inline=False)
-  embed.add_field(name="$dead", value="Follow command with date [MM-DD-YYYY] to see the setlist from that date. i.e. $dead 21-07-1990", inline=False)
+  embed.add_field(name="$bmfs", value="Follow command with date [DD-MM-YYYY] to see the setlist from that date. i.e. $billy 29-06-2022", inline=False)
+  embed.add_field(name="$dead", value="Follow command with date [DD-MM-YYYY] to see the setlist from that date. i.e. $dead 21-07-1990", inline=False)
   embed.add_field(name="$custy", value="All hail King Custy", inline=False)
-  embed.add_field(name="$set", value="Follow command with artist and date [MM-DD-YYYY] to see that artsits setlist from that day. i.e. $set widespread panic 25-07-2022", inline=False)
+  embed.add_field(name="$set", value="Follow command with artist and date [DD-MM-YYYY] to see that artsits setlist from that day. i.e. $set widespread panic 25-07-2022", inline=False)
   await ctx.send(embed=embed)
 
 #Easter egg
@@ -89,7 +88,7 @@ async def custy(ctx):
 async def dead(ctx, args):
   date= args
   if not date:
-    embed = discord.Embed(title=":warning: Please provide provide a date [MM-DD-YYYY]!", color=discord.Color.red())
+    embed = discord.Embed(title=":warning: Please provide provide a date [DD-MM-YYYY]!", color=discord.Color.red())
     embed.set_footer(text="Next Time Will Be Different, Until You Do It Again")
     await ctx.send(embed=embed)
     return  
@@ -112,7 +111,7 @@ async def dead(ctx, args):
         songs += "\n"
 
     location = json.loads(r.text)["setlist"][0]["venue"]["name"] +", " +json.loads(r.text)["setlist"][0]["venue"]["city"]["name"]+", "+json.loads(r.text)["setlist"][0]["venue"]["city"]["state"]
-    embed = discord.Embed(title="Setlist archive", color=discord.Color.gold())
+    embed = discord.Embed(title="Setlist", color=discord.Color.gold())
     embed.add_field(name="Artist", value=artist, inline=True)
     embed.add_field(name='Date', value=date, inline=True)
     embed.add_field(name='Songs', value=songs, inline=False)
@@ -129,7 +128,7 @@ async def dead(ctx, args):
 async def bmfs(ctx, args):
   date= args
   if not date:
-    embed = discord.Embed(title=":warning: Please provide provide a date [MM-DD-YYYY]!", color=discord.Color.red())
+    embed = discord.Embed(title=":warning: Please provide provide a date [DD-MM-YYYY]!", color=discord.Color.red())
     embed.set_footer(text="Next Time Will Be Different, Until You Do It Again")
     await ctx.send(embed=embed)
     return  
@@ -167,5 +166,3 @@ async def bmfs(ctx, args):
 #SERVER
 keep_alive()
 client.run(TOKEN)
-
-

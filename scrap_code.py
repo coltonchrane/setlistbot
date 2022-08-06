@@ -13,47 +13,6 @@ def get_setlist(date):
     return json_data
     #return setlist
 
-"""
-
-'''@client.event
-async def on_message(message):
-    msg = message.content
-    if message.author == client.user:
-        return
-    if msg.startswith("$sl"):
-        #DATE VALIDATOR
-        date = msg.split("$sl ", 1)[1]
-        if '/' in date:
-            await message.channel.send("Date must be in DD-MM-YYYY format.")
-        else:
-            day, month, year = date.split('-')
-            isValidDate = True
-            try:
-                datetime.datetime(int(year), int(month), int(day))
-            except ValueError:
-                isValidDate = False
-            if (isValidDate):
-
-                #GET SETLIST
-                setlist = get_setlist(date)
-
-                #NO SHOW DATA
-                if not setlist:
-                    print(setlist)
-                    await message.channel.send(
-                        file=discord.File("gonfishn.jpg"))
-                    await message.channel.send("No setlist for that day")
-                else:
-                    print(setlist)
-                    await message.channel.send(setlist)
-            else:
-                await message.channel.send("Date must be in DD-MM-YYYY format.")
-
-'''
-
-
-"""Extract nested values from a JSON tree."""
-
 
 '''def json_extract(obj, key):
     """Recursively fetch values from nested JSON."""
@@ -75,3 +34,5 @@ async def on_message(message):
     values = extract(obj, arr, key)
     return values
     '''
+
+#f'https://api.setlist.fm/rest/1.0/search/setlists?artistName={artist}&p=1&date={date}'
