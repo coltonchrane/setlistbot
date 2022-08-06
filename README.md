@@ -14,3 +14,15 @@ handle errors in more detail. Would love to hear any feedback or interest in thi
   JOIN THE DISCORD SERVER HERE
 </a>
 </h3>
+
+<h3 align= "center"> COMMANDS: </h3>
+
+**$help** : Displays setlistbot commands
+
+**$dead {date}**: Displays the Grateful Dead setlist given date. [DD-MM-YYYY]  i.e. $dead 21-07-1990
+
+**$bmfs {date}**: Displays Billy Strings setlist given date. [DD-MM-YYYY] i.e. $bmfs 29-06-2022
+
+**$set {artist} {date}** : Displays setlist given artist and date. [DD-MM-YYYY] i.e.  $set widespread panic 25-07-2022
+
+**$custy** : All hail King Custy!

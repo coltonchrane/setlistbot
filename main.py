@@ -29,10 +29,10 @@ async def set(ctx, *args):
       date = None
     else:
       date = args[-1]
+    
     id_search = musicbrainzngs.search_artists(artist= artist)
     id= id_search['artist-list'][0]['id']
     print(id)
-    
     url = f"https://api.setlist.fm/rest/1.0/search/setlists?artistMbid={id}&date={date}&p=1"
     headers = {'x-api-key': APIKEY, 'Accept': 'application/json'}
     r = requests.get(url, headers=headers)
@@ -43,7 +43,7 @@ async def set(ctx, *args):
   except Exception:
     embed = discord.Embed(title="ERROR: Retreiving Data", color=discord.Color.red())
     embed.add_field(name= "Suggestion", value="Please make sure artist/ band is spelled correctly and date is in [DD-MM-YYYY] format")
-    #embed.set_image(url="https://giphy.com/embed/xT39DjIU9qxLetWZPO")
+    #embed.set_image(url="https://replit.com/@coltonchrane/setlistbot#fear.gif")
     await ctx.send(embed=embed)
 
 #Setlist for the Dead given date    
@@ -63,7 +63,7 @@ async def dead(ctx, args):
   except Exception:
     embed = discord.Embed(title="ERROR: Retreiving Data", color=discord.Color.red())
     embed.add_field(name= "Suggestion", value="Please make sure date is in [DD-MM-YYYY] format")
-    #embed.set_image(url="https://giphy.com/embed/xT39DjIU9qxLetWZPO")
+    #embed.set_image(url="https://replit.com/@coltonchrane/setlistbot#fear.gif")
     await ctx.send(embed=embed)
     
 #Setlist for Billy strings given date   
@@ -83,7 +83,7 @@ async def bmfs(ctx, args):
   except Exception:
     embed = discord.Embed(title="ERROR: Retreiving Data", color=discord.Color.red())
     embed.add_field(name= "Suggestion", value="Please make sure date is in [DD-MM-YYYY] format")
-    #embed.set_image(url="https://giphy.com/embed/xT39DjIU9qxLetWZPO")
+    #embed.set_image(url="https://replit.com/@coltonchrane/setlistbot#fear.gif")
     await ctx.send(embed=embed)
 
 #Method for Formatting JSON and sending setlist    
@@ -120,7 +120,7 @@ async def sendSet(artist,date,ctx,r):
   except Exception:
     embed = discord.Embed(title="ERROR: Assembling Setlist", color=discord.Color.red())
     embed.add_field(name= "Suggestion", value="Verify that your search is spelled correctly and date is in [DD-MM-YYYY]")
-    #embed.set_image(url="https://giphy.com/embed/xT39DjIU9qxLetWZPO")
+    #embed.set_image(url="https://replit.com/@coltonchrane/setlistbot#fear.gif")
     await ctx.send(embed=embed)
 
 #HELP
@@ -131,6 +131,7 @@ async def help(ctx):
   embed.add_field(name="$dead", value="Follow command with date [DD-MM-YYYY] to see the setlist from that date. i.e. $dead 21-07-1990", inline=False)
   embed.add_field(name="$custy", value="All hail King Custy", inline=False)
   embed.add_field(name="$set", value="**STILL IN DEVELOPMENT** Follow command with artist and date [DD-MM-YYYY] to see that artsits setlist from that day. i.e. $set widespread panic 25-07-2022", inline=False)
+  #embed.set_image(url="https://replit.com/@coltonchrane/setlistbot#jerry.gif")
   await ctx.send(embed=embed)
 
 #Easter egg  
@@ -144,7 +145,6 @@ async def custy(ctx):
 #SERVER
 keep_alive()
 client.run(TOKEN)
-
 
 #SCRAP CODE
 #used for artist text search (circumvents MusicBrainz API)
