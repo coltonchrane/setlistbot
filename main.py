@@ -13,6 +13,7 @@ client = discord.Client()
 client = commands.Bot(command_prefix='$')
 client.remove_command('help')
 musicbrainzngs.set_useragent("User-Agent","nuDev/1.0.0 (nuDev@example.com) )",contact=None)
+
 #Lets me know when logged in
 @client.event
 async def on_ready():
@@ -44,7 +45,7 @@ async def set(ctx, *args):
     embed.set_footer(text="Please make sure artist/ band is spelled correctly and date is in [DD-MM-YYYY] format")
     await ctx.send(embed=embed)
 
-#Setlist for the Dead given date
+#Setlist for the Dead given date    
 @client.command()
 async def dead(ctx, args):
   try:
@@ -63,7 +64,7 @@ async def dead(ctx, args):
       embed.set_footer(text="Please make sure date is in [DD-MM-YYYY] format")
       await ctx.send(embed=embed)
     
-#Setlist for Billy strings given date
+#Setlist for Billy strings given date   
 @client.command()
 async def bmfs(ctx, args):
   try:
@@ -81,7 +82,8 @@ async def bmfs(ctx, args):
     embed = discord.Embed(title="ERROR: Retreiving Data", color=discord.Color.red())
     embed.set_footer(text="Please make sure date is in [DD-MM-YYYY] format")
     await ctx.send(embed=embed)
-#Method for Formatting JSON and sending setlist
+
+#Method for Formatting JSON and sending setlist    
 async def sendSet(artist,date,ctx,r):
   try:
     songs = ""
@@ -121,13 +123,13 @@ async def sendSet(artist,date,ctx,r):
 @client.command()
 async def help(ctx):
   embed = discord.Embed(title="Help", color=discord.Color.blue())
-  embed.add_field(name="$bmfs", value="Follow command with date [DD-MM-YYYY] to see the setlist from that date. i.e. $billy 29-06-2022", inline=False)
+  embed.add_field(name="$bmfs", value="Follow command with date [DD-MM-YYYY] to see the setlist from that date. i.e. $bmfs 29-06-2022", inline=False)
   embed.add_field(name="$dead", value="Follow command with date [DD-MM-YYYY] to see the setlist from that date. i.e. $dead 21-07-1990", inline=False)
   embed.add_field(name="$custy", value="All hail King Custy", inline=False)
   embed.add_field(name="$set", value="STILL IN DEVELOPMENT!!!Follow command with artist and date [DD-MM-YYYY] to see that artsits setlist from that day. i.e. $set widespread panic 25-07-2022", inline=False)
   await ctx.send(embed=embed)
 
-#Easter egg
+#Easter egg  
 @client.command()
 async def custy(ctx):
   wook = discord.File("kingCust.jpg")
