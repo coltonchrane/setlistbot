@@ -1,4 +1,4 @@
-# Setlistbot for Discord
+# setlistbot for Discord
 
 ### Generates setlist for Billy Strings and the Grateful Dead given the date. Personal programming project utilizing API's.
 
