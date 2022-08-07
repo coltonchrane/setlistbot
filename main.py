@@ -105,6 +105,8 @@ async def sendSet(artist,date,ctx,r):
       embed = discord.Embed(title="Setlist", color=discord.Color.gold())
       embed.add_field(name="Artist", value=artist, inline=True)
       embed.add_field(name='Date', value=date, inline=True)
+      if songs == "":
+        songs = "Song information not available"
       embed.add_field(name='Songs', value=songs, inline=False)
       try:
           embed.add_field(name='Tour Name', value=json.loads(r.text)["setlist"][0]["tour"]["name"], inline=False)
