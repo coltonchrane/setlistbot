@@ -4,7 +4,7 @@ import os
 import requests
 import json
 from keep_alive import keep_alive
-
+import musicbrainzngs
 
 #CREDENTIALS & VARIABLES
 APIKEY = os.environ['apikey']
@@ -12,7 +12,7 @@ TOKEN = os.environ['TOKEN']
 client = discord.Client()
 client = commands.Bot(command_prefix='$')
 client.remove_command('help')
-
+musicbrainzngs.set_useragent("User-Agent","nuDev/1.0.0 (nuDev@example.com) )",contact=None)
 
 #Lets me know when logged in
 @client.event
@@ -30,7 +30,11 @@ async def set(ctx, *args):
     else:
       date = args[-1]
 
-    url = f'https://api.setlist.fm/rest/1.0/search/setlists?artistName={artist}&p=1&date={date}'    
+    #using musicbrainz api gives search more robustness than setlist.fm artistname (typos,etc.)
+    id_search = musicbrainzngs.search_artists(artist= artist)
+    id= id_search['artist-list'][0]['id']
+    url = f"https://api.setlist.fm/rest/1.0/search/setlists?artistMbid={id}&date={date}&p=1"
+    
     headers = {'x-api-key': APIKEY, 'Accept': 'application/json'}
     r = requests.get(url, headers=headers)
     print(r.text)
@@ -91,7 +95,6 @@ async def sendSet(artist,date,ctx,r):
     for setlist in json.loads(r.text)["setlist"]:
       artist = setlist["artist"]["name"]
       if artist in setlist["artist"]["name"]:
-
         for set in setlist["sets"]["set"]:
           try:
             songs += "-- "+set["name"].replace(':', '') +" --\n"
@@ -148,10 +151,10 @@ client.run(TOKEN)
 
 #SCRAP CODE
 
-#search by artist name
+#search by artist name (less robust)
 #f'https://api.setlist.fm/rest/1.0/search/setlists?artistName={artist}&p=1&date={date}'
 
-#search by music brainz id
+#search by music brainz id (more robust)
 #import musicbrainzngs
 #musicbrainzngs.set_useragent("User-Agent","nuDev/1.0.0 (nuDev@example.com) )",contact=None)
 #id_search = musicbrainzngs.search_artists(artist= artist)
