@@ -19,3 +19,5 @@
 **$bmfs {date}**: Displays Billy Strings setlist given date. [DD-MM-YYYY] i.e. $bmfs 29-06-2022
 
 **$custy** : All hail King Custy!
+
+Next steps: Error handling needs to be more specific

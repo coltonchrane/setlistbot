@@ -86,6 +86,7 @@ async def bmfs(ctx, args):
 #Method for Formatting JSON and sending setlist    
 async def sendSet(artist,date,ctx,r):
   try:
+    print(r.text)
     songs = ""
     for setlist in json.loads(r.text)["setlist"]:
       artist = setlist["artist"]["name"]
@@ -96,7 +97,13 @@ async def sendSet(artist,date,ctx,r):
           except:
             pass
           for song in set["song"]:
-            songs += song["name"]+"\n"
+            songs += "**"+song["name"]+"**"
+            if "info" in song:
+              songs += song["info"] +"\n"
+            else:
+              songs+= "\n"
+            if "cover" in song:
+              songs+= "*by " + song["cover"]["name"]+"*\n"
           songs += "\n"
           
       location = json.loads(r.text)["setlist"][0]["venue"]["name"] +", " +json.loads(r.text)["setlist"][0]["venue"]["city"]["name"]+", "+json.loads(r.text)["setlist"][0]["venue"]["city"]["state"]
