@@ -39,10 +39,11 @@ async def set(ctx, *args):
     await sendSet(artist,date,ctx,r)
     
   except Exception:
+    fear = discord.File("images/fear.gif")
     embed = discord.Embed(title="ERROR: Retreiving Data", color=discord.Color.red())
-    embed.add_field(name= "Suggestion", value="Please make sure artist/ band is spelled correctly and date is in [DD-MM-YYYY] format")
-    #embed.set_image(url="https://replit.com/@coltonchrane/setlistbot#fear.gif")
-    await ctx.send(embed=embed)
+    embed.add_field(name= "Suggestion", value="Please make sure the artist is spelled correctly and date is in [DD-MM-YYYY] format")
+    embed.set_image(url='attachment://fear.gif')
+    await ctx.send(embed=embed, file = fear)
 
 #Setlist for the Dead given date    
 @client.command()
@@ -57,10 +58,11 @@ async def dead(ctx, args):
     await sendSet(artist,date,ctx,r)
  
   except Exception:
+    fear = discord.File("images/fear.gif")
     embed = discord.Embed(title="ERROR: Retreiving Data", color=discord.Color.red())
     embed.add_field(name= "Suggestion", value="Please make sure date is in [DD-MM-YYYY] format")
-    #embed.set_image(url="https://replit.com/@coltonchrane/setlistbot#fear.gif")
-    await ctx.send(embed=embed)
+    embed.set_image(url='attachment://fear.gif')
+    await ctx.send(embed=embed, file = fear)
     
 #Setlist for Billy strings given date   
 @client.command()
@@ -75,10 +77,11 @@ async def bmfs(ctx, args):
     await sendSet(artist,date,ctx,r)
   
   except Exception:
+    fear = discord.File("images/fear.gif")
     embed = discord.Embed(title="ERROR: Retreiving Data", color=discord.Color.red())
     embed.add_field(name= "Suggestion", value="Please make sure date is in [DD-MM-YYYY] format")
-    #embed.set_image(url="https://replit.com/@coltonchrane/setlistbot#fear.gif")
-    await ctx.send(embed=embed)
+    embed.set_image(url='attachment://fear.gif')
+    await ctx.send(embed=embed, file = fear)
 
 #Method for Formatting JSON and sending setlist    
 async def sendSet(artist,date,ctx,r):
@@ -111,10 +114,11 @@ async def sendSet(artist,date,ctx,r):
       await ctx.send(embed=embed)
   
   except Exception:
+    fear = discord.File("images/fear2.gif")
     embed = discord.Embed(title="ERROR: Assembling Setlist", color=discord.Color.red())
     embed.add_field(name= "Suggestion", value="Verify that your search is spelled correctly and date is in [DD-MM-YYYY]")
-    #embed.set_image(url="https://replit.com/@coltonchrane/setlistbot#fear.gif")
-    await ctx.send(embed=embed)
+    embed.set_image(url='attachment://fear2.gif')
+    await ctx.send(embed=embed, file = fear)
 
 #HELP
 @client.command()
@@ -125,13 +129,14 @@ async def help(ctx):
   embed.add_field(name="$bmfs {date}", value="Displays Billy Strings setlist given date. [DD-MM-YYYY] i.e. $bmfs 29-06-2022", inline=False)
   embed.add_field(name="$dead {date}", value="Displays the Grateful Dead setlist given date. [DD-MM-YYYY] i.e. $dead 21-07-1990", inline=False)
   embed.add_field(name="$custy", value="All hail King Custy", inline=False)
-  #embed.set_image(url="https://replit.com/@coltonchrane/setlistbot#jerry.gif")
-  await ctx.send(embed=embed)
+  jerry = discord.File("images/jerry.gif")
+  embed.set_image(url='attachment://jerry.gif')
+  await ctx.send(embed=embed, file = jerry)
 
 #Easter egg  
 @client.command()
 async def custy(ctx):
-  wook = discord.File("kingCust.jpg")
+  wook = discord.File("images/kingCust.jpg")
   embed = discord.Embed(title="King Custy", color=discord.Color.green())
   embed.set_image(url="attachment://kingCust.jpg")
   await ctx.send(embed=embed, file=wook)
