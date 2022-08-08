@@ -32,10 +32,13 @@ async def set(ctx, *args):
 
 #using musicbrainz api gives search more robustness than setlist.fm artistname (typos,etc.)
     id_search = musicbrainzngs.search_artists(artist= artist)
-    id= id_search['artist-list'][0]['id']    
+    id= id_search['artist-list'][0]['id']
+    artist= id_search['artist-list'][0]['name']
     url = f"https://api.setlist.fm/rest/1.0/search/setlists?artistMbid={id}&date={date}&p=1" 
+    #Grab formatted artist name from musicbrainz
     headers = {'x-api-key': APIKEY, 'Accept': 'application/json'}
     r = requests.get(url, headers=headers)
+    print(id_search)
     await sendSet(artist,date,ctx,r)
     
   except Exception:
@@ -89,8 +92,8 @@ async def sendSet(artist,date,ctx,r):
     print(r.text)
     songs = ""
     for setlist in json.loads(r.text)["setlist"]:
-      artist = setlist["artist"]["name"]
       if artist in setlist["artist"]["name"]:
+        artist = "["+ artist +"](" + setlist["artist"]["url"] + ")"
         for set in setlist["sets"]["set"]:
           try:
             songs += "-- "+set["name"].replace(':', '') +" --\n"
@@ -106,7 +109,8 @@ async def sendSet(artist,date,ctx,r):
               songs+= "*by " + song["cover"]["name"]+"*\n"
           songs += "\n"
           
-      location = json.loads(r.text)["setlist"][0]["venue"]["name"] +", " +json.loads(r.text)["setlist"][0]["venue"]["city"]["name"]+", "+json.loads(r.text)["setlist"][0]["venue"]["city"]["state"]
+      location = "[" +json.loads(r.text)["setlist"][0]["venue"]["name"] +", " +json.loads(r.text)["setlist"][0]["venue"]["city"]["name"]+", "+json.loads(r.text)["setlist"][0]["venue"]["city"]["state"] + "](" + setlist["venue"]["url"] +")"
+      date = "["+date+"]("+ setlist["url"]+")"
       embed = discord.Embed(title="Setlist", color=discord.Color.gold())
       embed.add_field(name="Artist", value=artist, inline=True)
       embed.add_field(name='Date', value=date, inline=True)
