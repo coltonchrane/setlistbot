@@ -99,7 +99,7 @@ async def sendSet(artist,date,ctx,r):
           for song in set["song"]:
             songs += "**"+song["name"]+"**"
             if "info" in song:
-              songs += song["info"] +"\n"
+              songs += " " +song["info"] +"\n"
             else:
               songs+= "\n"
             if "cover" in song:
@@ -136,6 +136,7 @@ async def help(ctx):
   embed.add_field(name="$bmfs {date}", value="Displays Billy Strings setlist given date. [DD-MM-YYYY] i.e. $bmfs 29-06-2022", inline=False)
   embed.add_field(name="$dead {date}", value="Displays the Grateful Dead setlist given date. [DD-MM-YYYY] i.e. $dead 21-07-1990", inline=False)
   embed.add_field(name="$custy", value="All hail King Custy", inline=False)
+  embed.add_field(name="The Grateful Spunions Collection", value="[Click here for music](https://drive.google.com/drive/folders/1NSDvB7XjIrig_oGQN4dcyhehjTMJm9PP?usp=sharing)", inline=False)
   jerry = discord.File("images/jerry.gif")
   embed.set_image(url='attachment://jerry.gif')
   await ctx.send(embed=embed, file = jerry)
