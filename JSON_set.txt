@@ -1,0 +1,213 @@
+{
+  "type": "setlists",
+  "itemsPerPage": 20,
+  "page": 1,
+  "total": 1,
+  "setlist": [
+    {
+      "id": "6381f2cb",
+      "versionId": "g73d366e1",
+      "eventDate": "25-03-2021",
+      "lastUpdated": "2021-04-13T14:31:43.000+0000",
+      "artist": {
+        "mbid": "640db492-34c4-47df-be14-96e2cd4b9fe4",
+        "name": "Billy Strings",
+        "sortName": "Strings, Billy",
+        "disambiguation": "US Bluegrass",
+        "url": "https://www.setlist.fm/setlists/billy-strings-73c3fe21.html"
+      },
+      "venue": {
+        "id": "33d62445",
+        "name": "Tipitina's",
+        "city": {
+          "id": "4335045",
+          "name": "New Orleans",
+          "state": "Louisiana",
+          "stateCode": "LA",
+          "coords": {
+            "lat": 29.955,
+            "long": -90.075
+          },
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        "url": "https://www.setlist.fm/venue/tipitinas-new-orleans-la-usa-33d62445.html"
+      },
+      "tour": {
+        "name": "Livestream Benefit Shows 2021"
+      },
+      "sets": {
+        "set": [
+          {
+            "name": "Set 1:",
+            "song": [
+              {
+                "name": "City of New Orleans",
+                "cover": {
+                  "mbid": "b8efe8ac-45db-4a71-bb51-c1503986172f",
+                  "name": "Arlo Guthrie",
+                  "sortName": "Guthrie, Arlo",
+                  "disambiguation": "American folk singer-songwriter",
+                  "url": "https://www.setlist.fm/setlists/arlo-guthrie-6bd62666.html"
+                }
+              },
+              {
+                "name": "Bronzeback"
+              },
+              {
+                "name": "Been All Around This World",
+                "cover": {
+                  "mbid": "9be7f096-97ec-4615-8957-8d40b5dcbc41",
+                  "name": "[traditional]",
+                  "sortName": "[traditional]",
+                  "disambiguation": "Special Purpose Artist",
+                  "url": "https://www.setlist.fm/setlists/traditional-5bd2f7e4.html"
+                }
+              },
+              {
+                "name": "Hide & Seek"
+              },
+              {
+                "name": "Cold on the Shoulder",
+                "cover": {
+                  "mbid": "9d97b077-b28d-4ba8-a3d9-c71926e3b2b6",
+                  "name": "Gordon Lightfoot",
+                  "sortName": "Lightfoot, Gordon",
+                  "disambiguation": "",
+                  "url": "https://www.setlist.fm/setlists/gordon-lightfoot-73d6ba9d.html"
+                }
+              },
+              {
+                "name": "Watch It Fall"
+              },
+              {
+                "name": "Little Sadie",
+                "cover": {
+                  "mbid": "8aa38215-217d-432e-aca6-f2d85b05e843",
+                  "name": "Doc Watson",
+                  "sortName": "Watson, Doc",
+                  "disambiguation": "US guitarist, singer & songwriter",
+                  "url": "https://www.setlist.fm/setlists/doc-watson-3d6b1b7.html"
+                }
+              },
+              {
+                "name": "Taking Water"
+              },
+              {
+                "name": "A Robin Built a Nest on Daddy's Grave",
+                "cover": {
+                  "mbid": "8f918972-81e9-43a5-80a4-d244a42dc5b2",
+                  "name": "The Stanley Brothers",
+                  "sortName": "Stanley Brothers, The",
+                  "disambiguation": "",
+                  "url": "https://www.setlist.fm/setlists/the-stanley-brothers-73d6ae9d.html"
+                }
+              },
+              {
+                "name": "Home"
+              }
+            ]
+          },
+          {
+            "name": "Set 2:",
+            "song": [
+              {
+                "name": "Plastic Banana",
+                "cover": {
+                  "mbid": "ca90a5b0-cb18-4f94-9c14-116826fcc422",
+                  "name": "Tony Rice",
+                  "sortName": "Rice, Tony",
+                  "disambiguation": "",
+                  "url": "https://www.setlist.fm/setlists/tony-rice-bd6b12a.html"
+                }
+              },
+              {
+                "name": "Going to the Races",
+                "cover": {
+                  "mbid": "3e923c4f-ef0c-4295-ab9e-9f028c28ae47",
+                  "name": "Carter Stanley",
+                  "sortName": "Stanley, Carter",
+                  "disambiguation": "",
+                  "url": "https://www.setlist.fm/setlists/carter-stanley-1bd681ac.html"
+                }
+              },
+              {
+                "name": "Ain't Nothing to Me",
+                "cover": {
+                  "mbid": "8300d0fa-d120-47f6-a84e-91f140c74767",
+                  "name": "Johnny Winter",
+                  "sortName": "Winter, Johnny",
+                  "disambiguation": "American blues/rock musician",
+                  "url": "https://www.setlist.fm/setlists/johnny-winter-4bd6bb0e.html"
+                }
+              },
+              {
+                "name": "June Apple",
+                "cover": {
+                  "mbid": "9be7f096-97ec-4615-8957-8d40b5dcbc41",
+                  "name": "[traditional]",
+                  "sortName": "[traditional]",
+                  "disambiguation": "Special Purpose Artist",
+                  "url": "https://www.setlist.fm/setlists/traditional-5bd2f7e4.html"
+                },
+                "info": ">"
+              },
+              {
+                "name": "Must Be Seven"
+              },
+              {
+                "name": "Show Me the Door"
+              },
+              {
+                "name": "Pretty Daughter",
+                "cover": {
+                  "mbid": "e3c91e87-54c4-4c23-b0c6-1ff917ce2d2b",
+                  "name": "Danny Barnes",
+                  "sortName": "Barnes, Danny",
+                  "disambiguation": "",
+                  "url": "https://www.setlist.fm/setlists/danny-barnes-bd7d18a.html"
+                },
+                "info": ">"
+              },
+              {
+                "name": "Sugar Hill Ramble",
+                "cover": {
+                  "mbid": "402e4f4f-33aa-4b2b-9fdb-3cb4eb38f729",
+                  "name": "David Grisman",
+                  "sortName": "Grisman, David",
+                  "disambiguation": "",
+                  "url": "https://www.setlist.fm/setlists/david-grisman-13d6b129.html"
+                },
+                "info": ">"
+              },
+              {
+                "name": "Unwanted Love",
+                "cover": {
+                  "mbid": "402e4f4f-33aa-4b2b-9fdb-3cb4eb38f729",
+                  "name": "David Grisman",
+                  "sortName": "Grisman, David",
+                  "disambiguation": "",
+                  "url": "https://www.setlist.fm/setlists/david-grisman-13d6b129.html"
+                }
+              },
+              {
+                "name": "Gonna Lay Down My Old Guitar",
+                "cover": {
+                  "mbid": "8826a2b1-7dbf-4ab6-9baf-329372691a29",
+                  "name": "Doc & Merle Watson",
+                  "sortName": "Watson, Doc & Merle",
+                  "disambiguation": "",
+                  "url": "https://www.setlist.fm/setlists/doc-and-merle-watson-6bd6423e.html"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "info": "Livestream on Nugs.tv",
+      "url": "https://www.setlist.fm/setlist/billy-strings/2021/tipitinas-new-orleans-la-6381f2cb.html"
+    }
+  ]
+}
