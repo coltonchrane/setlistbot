@@ -30,15 +30,13 @@ async def set(ctx, *args):
     else:
       date = args[-1]
 
-#using musicbrainz api gives search more robustness than setlist.fm artistname (typos,etc.)
+#using musicbrainz api gives search more robustness in search and formatting than setlist.fm artistname (typos,etc.)
     id_search = musicbrainzngs.search_artists(artist= artist)
     id= id_search['artist-list'][0]['id']
     artist= id_search['artist-list'][0]['name']
     url = f"https://api.setlist.fm/rest/1.0/search/setlists?artistMbid={id}&date={date}&p=1" 
-    #Grab formatted artist name from musicbrainz
     headers = {'x-api-key': APIKEY, 'Accept': 'application/json'}
     r = requests.get(url, headers=headers)
-    print(id_search)
     await sendSet(artist,date,ctx,r)
     
   except Exception:
@@ -73,7 +71,6 @@ async def bmfs(ctx, args):
   try:
     date= args
     artist= "Billy Strings"
-
     url = f"https://api.setlist.fm/rest/1.0/search/setlists?artistMbid=640db492-34c4-47df-be14-96e2cd4b9fe4&date={date}&p=1"
     headers = {'x-api-key': APIKEY, 'Accept': "application/json"}
     r = requests.get(url, headers=headers)
@@ -89,7 +86,6 @@ async def bmfs(ctx, args):
 #Method for Formatting JSON and sending setlist    
 async def sendSet(artist,date,ctx,r):
   try:
-    print(r.text)
     songs = ""
     for setlist in json.loads(r.text)["setlist"]:
       if artist in setlist["artist"]["name"]:
