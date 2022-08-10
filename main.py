@@ -86,7 +86,18 @@ async def bmfs(ctx, args):
 #Method for Formatting JSON and sending setlist    
 async def sendSet(artist,date,ctx,r):
   try:
+    print(r.text)
     songs = ""
+    try:
+      if json.loads(r.text)["code"]== 404:
+        fishin = discord.File("images/gonfishin.jpg")
+        embed = discord.Embed(title="GONE FISHIN':No Show record for that date", color=discord.Color.purple())
+        embed.add_field(name= "Suggestion", value="Try a different date or Verify that your search is spelled correctly and date is in [DD-MM-YYYY]")
+        embed.set_image(url='attachment://gonfishin.jpg')
+        await ctx.send(embed=embed, file = fishin)
+        return
+    except:
+      pass
     for setlist in json.loads(r.text)["setlist"]:
       if artist in setlist["artist"]["name"]:
         artist = "["+ artist +"](" + setlist["artist"]["url"] + ")"
