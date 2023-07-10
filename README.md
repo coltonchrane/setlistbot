@@ -1,6 +1,6 @@
 # setlistbot for Discord
 
-### Generates setlist for any artist given the artist and the date. Personal programming project utilizing Discord and setlist.fm API's.
+### Generates setlist for any artist given the artist and the date. Personal programming project utilizing Discord, MusicBrainz, and setlist.fm API's.
 
 <h3 align= "center">
 <a href="https://discord.gg/PSKHmVgu"> 
