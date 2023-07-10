@@ -8,16 +8,8 @@
 </a>
 </h3>
 
-<h3 align= "center"> COMMANDS: </h3>
+![image](https://github.com/coltonchrane/setlistbot/assets/70654301/201d12db-2d81-426f-838a-f6fc7e0e2914)
 
-**$help** : Displays setlistbot commands
+![image](https://github.com/coltonchrane/setlistbot/assets/70654301/ea464a85-c8ce-4b50-bdf3-998d9d99a403)
 
-**$set {artist} {date}** : Displays setlist given artist and date. [DD-MM-YYYY] i.e.  $set widespread panic 25-07-2022
-
-**$dead {date}**: Displays the Grateful Dead setlist given date. [DD-MM-YYYY]  i.e. $dead 21-07-1990
-
-**$bmfs {date}**: Displays Billy Strings setlist given date. [DD-MM-YYYY] i.e. $bmfs 29-06-2022
-
-**$custy** : All hail King Custy!
-
-***Next steps: Error handling needs to be more specific and take bot off repl.it and host on my own server.***
+![image](https://github.com/coltonchrane/setlistbot/assets/70654301/ce5853bd-de53-4c60-83d0-4f2bb5828020)
