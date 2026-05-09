@@ -1,0 +1,45 @@
+name: CD - Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy-api:
+    name: Deploy .NET API
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build & Publish API
+        run: |
+          cd SetlistApi
+          dotnet publish -c Release -o ../publish_api
+
+      - name: 'Deploy API to Azure Web App'
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ secrets.AZURE_SETLIST_API_NAME }}
+          publish-profile: ${{ secrets.AZURE_SETLIST_API_PUBLISH_PROFILE }}
+          package: './publish_api'
+
+  deploy-bot:
+    name: Deploy Python Bot
+    runs-on: ubuntu-latest
+    needs: deploy-api # Ensure API is up first
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 'Deploy Bot to Azure Web App'
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ secrets.AZURE_SETLIST_BOT_NAME }}
+          publish-profile: ${{ secrets.AZURE_SETLIST_BOT_PUBLISH_PROFILE }}
+          package: '.' # Deploys the root folder containing setlist_bot.py

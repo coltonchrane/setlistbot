@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SetlistApi.Tests/SetlistApi.Tests.csproj" />
+  <Project Path="SetlistApi/SetlistApi.csproj" />
+</Solution>

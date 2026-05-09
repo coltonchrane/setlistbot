@@ -1,0 +1,24 @@
+# .NET
+bin/
+obj/
+*.user
+*.userosscache
+*.sln.docstates
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Azure
+.azure/
+
+# Secrets
+.breakpoints
+apikey
+TOKEN

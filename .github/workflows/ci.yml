@@ -1,0 +1,42 @@
+name: CI - PR Check
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  dotnet-tests:
+    name: .NET Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore dependencies
+        run: dotnet restore SetlistBot.sln
+      - name: Build
+        run: dotnet build SetlistBot.sln --no-restore
+      - name: Test
+        run: dotnet test SetlistBot.sln --no-build --verbosity normal
+
+  python-tests:
+    name: Python Lint & Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest aiohttp discord.py
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings.
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
