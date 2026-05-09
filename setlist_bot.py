@@ -49,7 +49,6 @@ async def set(ctx, *args):
     await send_formatted_setlist(ctx, data)
 
 async def send_formatted_setlist(ctx, data):
-    # This logic replicates your original formatting but uses the API response
     try:
         setlist = data["setlist"][0]
         artist_name = setlist["artist"]["name"]
