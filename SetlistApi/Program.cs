@@ -6,6 +6,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddOpenApi();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowPortfolio",
+        policy =>
+        {
+            policy.WithOrigins("https://coltonchrane.github.io", 
+                               "http://localhost:5500", 
+                               "http://127.0.0.1:5500")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 builder.Services.AddHttpClient("MusicBrainz", client =>
 {
     client.BaseAddress = new Uri("https://musicbrainz.org/ws/2/");
@@ -27,6 +39,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowPortfolio");
 
 app.MapGet("/api/setlist", async (string artist, string? date, IHttpClientFactory clientFactory, IConfiguration config) =>
 {
