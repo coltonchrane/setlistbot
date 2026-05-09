@@ -3,6 +3,26 @@ from discord.ext import commands
 import os
 import aiohttp
 import json
+from flask import Flask
+from threading import Thread
+
+# --- KEEP ALIVE SERVER ---
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "SetlistBot is running!"
+
+def run_flask():
+    # Azure App Service usually provides a PORT env var
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port)
+
+def keep_alive():
+    t = Thread(target=run_flask)
+    t.daemon = True
+    t.start()
+# -------------------------
 
 # CREDENTIALS & VARIABLES
 # In Azure, these will be App Service Environment Variables
@@ -94,6 +114,7 @@ async def help(ctx):
 
 if __name__ == "__main__":
     if TOKEN:
+        keep_alive()
         client.run(TOKEN)
     else:
         print("TOKEN not found in environment variables.")
