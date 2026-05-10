@@ -22,3 +22,6 @@ env/
 .breakpoints
 apikey
 TOKEN
+
+# Gemini CLI instructions
+GEMINI.md

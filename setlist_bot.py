@@ -3,19 +3,29 @@ from discord.ext import commands
 import os
 import aiohttp
 import json
+import logging
 from flask import Flask
 from threading import Thread
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('setlistbot')
+
 # --- KEEP ALIVE SERVER ---
-app = Flask('')
+app = Flask(__name__)
 
 @app.route('/')
 def home():
     return "SetlistBot is running!"
 
+@app.route('/health')
+def health():
+    return {"status": "ok"}, 200
+
 def run_flask():
-    # Azure App Service usually provides a PORT env var
+    # Azure App Service provides a PORT env var. Default to 8080.
     port = int(os.environ.get('PORT', 8080))
+    logger.info(f"Starting Flask keep-alive on port {port}")
     app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
@@ -25,30 +35,39 @@ def keep_alive():
 # -------------------------
 
 # CREDENTIALS & VARIABLES
-# In Azure, these will be App Service Environment Variables
 API_URL = os.environ.get('SETLIST_API_URL', 'http://localhost:5000/api/setlist')
-TOKEN = os.environ.get('TOKEN')
+TOKEN = os.environ.get('TOKEN') or os.environ.get('DISCORD_TOKEN')
 
-client = commands.Bot(command_prefix='$')
+# Define Intents (Required for discord.py 2.0+)
+intents = discord.Intents.default()
+intents.message_content = True  # Allows bot to read message content for commands
+
+client = commands.Bot(command_prefix='$', intents=intents)
 client.remove_command('help')
 
 @client.event
 async def on_ready():
-    print(f'Logged in as {client.user}')
+    logger.info(f'Logged in as {client.user} (ID: {client.user.id})')
+    logger.info('------')
 
 async def fetch_setlist(artist, date=None):
     params = {'artist': artist}
     if date:
         params['date'] = date
     
-    async with aiohttp.ClientSession() as session:
-        async with session.get(API_URL, params=params) as response:
-            if response.status == 200:
-                return await response.json(), None
-            elif response.status == 404:
-                return None, "GONE FISHIN': No show record found for that date."
-            else:
-                return None, f"Error from API: {response.status}"
+    logger.info(f"Fetching setlist for {artist} on {date} from {API_URL}")
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(API_URL, params=params) as response:
+                if response.status == 200:
+                    return await response.json(), None
+                elif response.status == 404:
+                    return None, "GONE FISHIN': No show record found for that date."
+                else:
+                    return None, f"Error from API: {response.status}"
+    except Exception as e:
+        logger.error(f"Error fetching setlist: {e}")
+        return None, f"Connection error: {e}"
 
 @client.command()
 async def set(ctx, *args):
@@ -82,8 +101,15 @@ async def send_formatted_setlist(ctx, data):
         embed.add_field(name='Date', value=date_str, inline=True)
         
         songs_text = ""
-        for s in setlist.get("sets", {}).get("set", []):
-            songs_text += f"-- {s.get('name', 'Set')} --\n"
+        sets_data = setlist.get("sets", {}).get("set", [])
+        
+        # Ensure sets_data is a list
+        if isinstance(sets_data, dict):
+            sets_data = [sets_data]
+            
+        for s in sets_data:
+            set_name = s.get('name') or "Set"
+            songs_text += f"-- {set_name} --\n"
             for song in s.get("song", []):
                 songs_text += f"**{song['name']}**\n"
         
@@ -92,19 +118,8 @@ async def send_formatted_setlist(ctx, data):
         
         await ctx.send(embed=embed)
     except Exception as e:
+        logger.error(f"Error assembling setlist: {e}")
         await ctx.send(f"Error assembling setlist: {e}")
-
-@client.command()
-async def dead(ctx, date):
-    data, error = await fetch_setlist("Grateful Dead", date)
-    if error: await ctx.send(error)
-    else: await send_formatted_setlist(ctx, data)
-
-@client.command()
-async def bmfs(ctx, date):
-    data, error = await fetch_setlist("Billy Strings", date)
-    if error: await ctx.send(error)
-    else: await send_formatted_setlist(ctx, data)
 
 @client.command()
 async def help(ctx):
@@ -115,6 +130,7 @@ async def help(ctx):
 if __name__ == "__main__":
     if TOKEN:
         keep_alive()
+        logger.info("Starting Discord bot...")
         client.run(TOKEN)
     else:
-        print("TOKEN not found in environment variables.")
+        logger.error("TOKEN not found in environment variables (tried TOKEN and DISCORD_TOKEN).")
