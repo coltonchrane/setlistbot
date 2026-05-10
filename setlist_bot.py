@@ -1,11 +1,16 @@
 import discord
 from discord.ext import commands
+from discord import app_commands
 import os
 import aiohttp
 import json
 import logging
 from flask import Flask
 from threading import Thread
+from dotenv import load_dotenv
+
+# Load .env if it exists
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -23,7 +28,6 @@ def health():
     return {"status": "ok"}, 200
 
 def run_flask():
-    # Azure App Service provides a PORT env var. Default to 8080.
     port = int(os.environ.get('PORT', 8080))
     logger.info(f"Starting Flask keep-alive on port {port}")
     app.run(host='0.0.0.0', port=port)
@@ -38,11 +42,22 @@ def keep_alive():
 API_URL = os.environ.get('SETLIST_API_URL', 'http://localhost:5000/api/setlist')
 TOKEN = os.environ.get('TOKEN') or os.environ.get('DISCORD_TOKEN')
 
-# Define Intents (Required for discord.py 2.0+)
-intents = discord.Intents.default()
-intents.message_content = True  # Allows bot to read message content for commands
+class SetlistBot(commands.Bot):
+    def __init__(self):
+        intents = discord.Intents.default()
+        # Slash commands don't technically need message_content, 
+        # but we keep it for now if you want to add prefix commands back later.
+        intents.message_content = True 
+        super().__init__(command_prefix='$', intents=intents)
 
-client = commands.Bot(command_prefix='$', intents=intents)
+    async def setup_hook(self):
+        # This copies the global commands over to your guild for instant testing
+        # In production, you'd just use tree.sync() which can take an hour to propagate globally.
+        logger.info("Syncing slash commands...")
+        await self.tree.sync()
+        logger.info("Slash commands synced.")
+
+client = SetlistBot()
 client.remove_command('help')
 
 @client.event
@@ -50,7 +65,7 @@ async def on_ready():
     logger.info(f'Logged in as {client.user} (ID: {client.user.id})')
     logger.info('------')
 
-async def fetch_setlist(artist, date=None):
+async def fetch_setlist(artist: str, date: str = None):
     params = {'artist': artist}
     if date:
         params['date'] = date
@@ -69,41 +84,36 @@ async def fetch_setlist(artist, date=None):
         logger.error(f"Error fetching setlist: {e}")
         return None, f"Connection error: {e}"
 
-@client.command()
-async def set(ctx, *args):
-    args = list(args)
-    if not args:
-        await ctx.send("Please provide an artist name.")
-        return
-        
-    artist = " ".join(args[:-1]) if "-" in args[-1] else " ".join(args)
-    date = args[-1] if "-" in args[-1] else None
-
+@client.tree.command(name="setlist", description="Get a setlist for an artist and date (DD-MM-YYYY)")
+@app_commands.describe(artist="Name of the artist", date="Date of the show (DD-MM-YYYY)")
+async def setlist(interaction: discord.Interaction, artist: str, date: str = None):
+    # Acknowledge the interaction immediately to prevent timeout
+    await interaction.response.defer()
+    
     data, error = await fetch_setlist(artist, date)
     
     if error:
-        await ctx.send(error)
+        await interaction.followup.send(error)
         return
 
-    await send_formatted_setlist(ctx, data)
+    await send_formatted_setlist(interaction, data)
 
-async def send_formatted_setlist(ctx, data):
+async def send_formatted_setlist(interaction, data):
     try:
-        setlist = data["setlist"][0]
-        artist_name = setlist["artist"]["name"]
-        venue = setlist["venue"]["name"]
-        city = setlist["venue"]["city"]["name"]
-        state = setlist["venue"]["city"].get("state", "")
-        date_str = setlist["eventDate"]
+        set_data = data["setlist"][0]
+        artist_name = set_data["artist"]["name"]
+        venue = set_data["venue"]["name"]
+        city = set_data["venue"]["city"]["name"]
+        state = set_data["venue"]["city"].get("state", "")
+        date_str = set_data["eventDate"]
         
         embed = discord.Embed(title="Setlist", color=discord.Color.gold())
         embed.add_field(name="Artist", value=artist_name, inline=True)
         embed.add_field(name='Date', value=date_str, inline=True)
         
         songs_text = ""
-        sets_data = setlist.get("sets", {}).get("set", [])
+        sets_data = set_data.get("sets", {}).get("set", [])
         
-        # Ensure sets_data is a list
         if isinstance(sets_data, dict):
             sets_data = [sets_data]
             
@@ -113,24 +123,22 @@ async def send_formatted_setlist(ctx, data):
             for song in s.get("song", []):
                 songs_text += f"**{song['name']}**\n"
         
+        # Discord embed fields have a 1024 char limit
+        if len(songs_text) > 1020:
+            songs_text = songs_text[:1017] + "..."
+
         embed.add_field(name='Songs', value=songs_text or "No songs listed", inline=False)
         embed.add_field(name='Location', value=f"{venue}, {city}, {state}", inline=False)
         
-        await ctx.send(embed=embed)
+        await interaction.followup.send(embed=embed)
     except Exception as e:
         logger.error(f"Error assembling setlist: {e}")
-        await ctx.send(f"Error assembling setlist: {e}")
-
-@client.command()
-async def help(ctx):
-    embed = discord.Embed(title="SetlistBot (Powered by .NET)", color=discord.Color.blue())
-    embed.add_field(name="$set {artist} {date}", value="e.g. $set widespread panic 25-07-2022", inline=False)
-    await ctx.send(embed=embed)
+        await interaction.followup.send(f"Error assembling setlist: {e}")
 
 if __name__ == "__main__":
     if TOKEN:
         keep_alive()
-        logger.info("Starting Discord bot...")
+        logger.info("Starting Discord bot with Slash Commands...")
         client.run(TOKEN)
     else:
-        logger.error("TOKEN not found in environment variables (tried TOKEN and DISCORD_TOKEN).")
+        logger.error("TOKEN not found in environment variables.")
