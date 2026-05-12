@@ -1,0 +1,13 @@
+name: Keep Warm
+on:
+  schedule:
+    - cron: '*/15 * * * *' # Every 15 minutes
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Azure API
+        run: |
+          curl -I "https://setlistapi-b8h4gthpgjcgfcgg.canadacentral-01.azurewebsites.net/api/setlist?artist=Billy%20Strings"
