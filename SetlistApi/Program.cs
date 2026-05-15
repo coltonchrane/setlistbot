@@ -12,6 +12,8 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("https://coltonchrane.github.io", 
+                               "https://coltonchrane.dev",
+                               "https://www.coltonchrane.dev",
                                "http://localhost:5500", 
                                "http://127.0.0.1:5500")
                   .AllowAnyHeader()
